@@ -1,17 +1,18 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import { Customer } from './common/commonClasses';
+import {frontClass} from './frontClass';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+
+
+const alice = new Customer(
+    123, "Alice", "Alice", "27.18.2818", "Nowhere"
+);
+const bob = new Customer(
+    321, "Bob", "Bob", "27.18.2818", "Nowhere"
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+let front=new frontClass()
+front.render();
+front.updateIdOfCustomers(new Set<number>().add(1234));
+front.updateCustomers(new Array<Customer>(alice,bob));
+
+
