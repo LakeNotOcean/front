@@ -11,20 +11,21 @@ import {
 } from "react-router-dom";
 import { NavbarClass } from './Navbar';
 import Footer from './Footer';
-import { Category, Customer , Order} from './common/commonClasses';
+import { Category, Customer} from './common/commonClasses';
 import { IDataBaseController, IView } from './common/commonInterfaces';
+import { NotifyType, SendType } from './common/enumTypes';
 
 
-export class frontClass implements IView {
+export class frontClass implements IView  {
 
     private _customerRef:RefObject<AddData>;
     private _orderRef:RefObject<AddData>;
     private _navBarRef:RefObject<NavbarClass>;
-    private _dataBase:IDataBaseController;
+    private _dataBaseContr:IDataBaseController;
 
-    constructor(dataBase:IDataBaseController)
+    constructor(dataBaseContr:IDataBaseController)
     {
-        this._dataBase=dataBase;
+        this._dataBaseContr=dataBaseContr;
         this._customerRef=createRef<AddData>();
         this._orderRef=createRef<AddData>();
         this._navBarRef=createRef<NavbarClass>();
@@ -33,9 +34,7 @@ export class frontClass implements IView {
       ReactDOM.render(
         <React.StrictMode>
           <Router>
-            <Route exact path="/" render={()=>(
-            <MainPage dataBase={this._dataBase}/>
-              )}/> 
+            <Route exact path="/" component={MainPage}/>
             <Route exact path="/inputData" render={()=> (
             <div>
               <AddData title={"Add Customer"} childProps={[{title:"ID",inputType:"number",errorMessage:"id exists/empty"},
@@ -44,7 +43,7 @@ export class frontClass implements IView {
                 {title:"Date of Birth",inputType:"date", errorMessage:"empty field"},
                 {title:"Location",inputType:"string", errorMessage:"empty field"}]
               }  
-              sendData={this.sendCustomerData}
+              dataBaseContr={this._dataBaseContr} listOfNotifies={[NotifyType.idOfCustomers]} typeOfData={SendType.customer}
               ref={this._customerRef}
               />
             <AddData title={"Add Order"} childProps={[{title:"ID",inputType:"number",errorMessage:"id exists/empty"},
@@ -54,7 +53,8 @@ export class frontClass implements IView {
                 {title:"Delivery Date",inputType:"date",errorMessage:"empty field"},
                 {title:"Delivery",inputType:"string",errorMessage:"empty field"}]
                 }
-                sendData={this.sendOrderData}
+                dataBaseContr={this._dataBaseContr} typeOfData={SendType.order}
+                listOfNotifies={[NotifyType.idOfCustomers, NotifyType.idOfModels, NotifyType.idOfCustomers]}
                 ref={this._orderRef}
                 /> 
                 <Link to="/">return to main page</Link>
@@ -62,7 +62,7 @@ export class frontClass implements IView {
             )}/>
             <Route exact path="/outputData" render={()=>(
               <div>
-                <NavbarClass ref={this._navBarRef}/>
+                <NavbarClass ref={this._navBarRef} dataBaseContr={this._dataBaseContr}/>
                 <Footer />
                 <Link to="/">return to main page</Link>
               </div>
@@ -72,35 +72,27 @@ export class frontClass implements IView {
         document.getElementById('root')
       );
     }
-    
-    sendCustomerData(data:Map<string,string>):void{
-      this._dataBase.notifyPushCustomer(new Customer(
-        +(data.get("ID") || 0),
-        data.get("First Name"), data.get("lastName"), data.get("Date of Birth"),data.get("Location")
-      ));
-    }
-    sendOrderData(data:Map<string,string>):void{
-      this._dataBase.notifyPushOrder(new Order(
-        +(data.get("ID") || 0),
-        +(data.get("Customer") || 0), +(data.get("Model") || 0), data.get("Order Date"),data.get("Delivery Date"),
-      ));
-    }
 
     updateIdOfCustomers(data:Set<number>):void{
         this._customerRef.current?.updateExist(0,data);
         this._orderRef.current?.updateExist(1,data);
+        console.log("customersId was updated");
     }
     updateIdOfOrders(data:Set<number>):void{
         this._customerRef.current?.updateExist(0,data);
+        console.log("ordersId was updated");
     }
 
     updateIdOfModels(data: Set<number>): void{
-      
+      this._orderRef.current?.updateExist(2,data);
+      console.log("modelsId was updated");
     }
 
     updateCustomers(data:Array<Customer>):void{
+      console.log("updateCustomers in frontClass is called",data.length);
       this._navBarRef.current?.updateCustomers(data);
     }
+    
     updateCategories(data:Array<Category>):void{
       this._navBarRef.current?.updateCategories(data);
     }

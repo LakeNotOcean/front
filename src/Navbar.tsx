@@ -1,6 +1,8 @@
 import { Component } from 'react';
 import styled from 'styled-components'
-import { Category, Customer, Item } from './common/commonClasses';
+import { Category, Customer } from './common/commonClasses';
+import { IDataBaseController } from './common/commonInterfaces';
+import { NotifyType } from './common/enumTypes';
 import CustomerSearch from './CustomerSearch';
 import logo from './logo.svg'
 import PerItemRevenueInfo from './PerCategoryRevenueInfo';
@@ -73,6 +75,7 @@ const Button = styled.li`
 // }
 
 export interface NavBarProps{
+    dataBaseContr:IDataBaseController;
 }
 
 interface NavBarState{
@@ -92,14 +95,28 @@ export class NavbarClass extends Component<NavBarProps,NavBarState>{
         this._dataCust=new Array<Customer>();
         this._dataCategory=new Array<Category>();
         this.updateCustomers=this.updateCustomers.bind(this);
+        this.updateCategories=this.updateCategories.bind(this);
         this.displayCustomSeach=this.displayCustomSeach.bind(this);
         this.displayPerItemRev=this.displayPerItemRev.bind(this);
     }
-    updateCustomers(data:Array<Customer>):void{
-        this._dataCust=data;
+
+    componentDidMount(){
+        console.log("component is mounted");
+        this.props.dataBaseContr.notify([NotifyType.listOfCust]);
     }
+    componentDidUpdate(){
+        console.log("component is mounted");
+        this.props.dataBaseContr.notify([NotifyType.listOfCust]);
+    }
+
+    updateCustomers(data:Array<Customer>):number{
+        console.log("updateCustomers in NavBAr is called");
+        this._dataCust=data;
+        return 0;
+    }
+
     updateCategories(data:Array<Category>):void{
-        this._dataCategory=new Array<Category>();
+        this._dataCategory=data;
     }
     render(){
         return(<Bar>

@@ -1,4 +1,5 @@
 import { Customer, Order, Item, Category } from "./commonClasses";
+import { NotifyType } from "./enumTypes";
 
 export interface IDataBaseController {
   notifyPushCustomer(cust: Customer): void;
@@ -7,10 +8,11 @@ export interface IDataBaseController {
   //notifyGetItemInfo(itemId: number): void;
   //notifyGetListOfItems(): void;
   //notifyGetCustomerOrders(custId: number): void;
-  notifyGetListOfCustomers(): void;
-  notifyGetIdOfCustomers(): void;
-  notifyGetIdOfModels(): void;
-  notifyGetIdOfOrders(): void;
+  // notifyGetListOfCustomers(): void;
+  // notifyGetIdOfCustomers(): void;
+  // notifyGetIdOfModels(): void;
+  // notifyGetIdOfOrders(): void;
+  notify(notifies: Array<NotifyType>): void;
 }
 
 export interface IView {

@@ -2,6 +2,9 @@
 
 
 import React, {Component,  RefObject} from 'react';
+import { Customer, Order } from './common/commonClasses';
+import { IDataBaseController } from './common/commonInterfaces';
+import { NotifyType, SendType } from './common/enumTypes';
 
 // export interface InputPropsCallBack{
 //     title:string;
@@ -24,11 +27,10 @@ export interface InputState {
 
 export interface AddDataProps {
     childProps:Array<InputProps>;
-    sendData:(data:Map<string,string>)=>void;
     title:string;   
-    // updateExist:{(exist:Set<number>):void;}[];
-
-    //children?:ReactElement<InputProps>[] | ReactElement<InputProps>
+    dataBaseContr:IDataBaseController;
+    listOfNotifies:Array<NotifyType>;
+    typeOfData:SendType;
 }
 
 export interface AddDataState{
@@ -56,14 +58,9 @@ export class AddData extends Component<AddDataProps,AddDataState>{
             this._childElements.push(React.createRef<InputData>());
         }
     }
-  
-
-    // handleChange(input:string):void{
-    //     this.setState({
-    //         inputStr:input
-    //     });
-    //     console.log("input was changed",this.state.inputStr);
-    // }
+    componentDidMount(){
+        this.props.dataBaseContr.notify(this.props.listOfNotifies);   
+    }
 
     render(){   
         return(
@@ -114,16 +111,33 @@ export class AddData extends Component<AddDataProps,AddDataState>{
             this._childElements.forEach((element)=>{
                 element.current?.clearInput();
             }); 
-            this.props.sendData(output);
+            this.sendData(output);
+
         }
 
     }
     updateExist(i:number,data:Set<number>):void{
-        console.log("updateExist is called")
         if (i>=this._exist.length)
             return;
         this._exist[i]=data;
-        console.log("data was changed",i,data.size);
+    }
+    private sendData(data:Map<string,string>):void{
+        switch(this.props.typeOfData){
+            case SendType.customer:
+                this.props.dataBaseContr.notifyPushCustomer(new Customer(
+                    +(data.get("ID") || 0),
+                    data.get("First Name"), data.get("lastName"), data.get("Date of Birth"),data.get("Location")
+                  ));
+                  console.log("customer was send");
+                break;
+            case SendType.order:
+                this.props.dataBaseContr.notifyPushOrder(new Order(
+                    +(data.get("ID") || 0),
+                    +(data.get("Customer") || 0), +(data.get("Model") || 0), data.get("Order Date"),data.get("Delivery Date"),
+                  ));
+                  console.log("order was send");
+                  break;
+        }
     }
 
 }
@@ -145,7 +159,6 @@ export class InputData extends Component<InputProps,InputState>{
     handleChange(e:React.FormEvent<HTMLInputElement>):void{
         this.setState({inputValue:e.currentTarget.value})
         //this.props.onInputChange(e.currentTarget.value);
-        console.log("input was changed",this.state.inputValue);
     }
 
     componentDidMount(){
