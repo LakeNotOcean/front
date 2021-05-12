@@ -1,0 +1,53 @@
+.mainPage {
+  height: 100vh;
+  min-height: 100vh;
+  background-color: #2e3036;
+}
+
+.info {
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 25px;
+  position: absolute;
+  text-align: center;
+  font-family: serif;
+  font-size: xx-large;
+  line-height: normal;
+  color: white;
+  background-color: rgb(70, 81, 105);
+}
+
+.greeting {
+  margin: 3%;
+  font: xx-large;
+  text-align: center;
+  border-radius: 5px;
+}
+.links {
+  display: flex;
+  flex-direction: row;
+  margin-left: 9%;
+}
+
+.link {
+  margin-top: 2%;
+  padding: 4px;
+  font-size: xx-large;
+  text-align: center;
+  border-radius: 5px;
+  margin: 3%;
+  cursor: pointer;
+  text-decoration: none;
+  border: none;
+  outline: none;
+  color: white;
+  background-color: rgb(51, 50, 50);
+}
+
+.link:hoover {
+  background-color: rgb(100, 99, 99);
+}
+.link:active {
+  background-color: rgb(34, 34, 34);
+}

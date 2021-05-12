@@ -1,5 +1,6 @@
-import { Customer, Order } from './common/commonClasses';
-import { IDataBaseController, } from './common/commonInterfaces';
+import { isTemplateLiteral } from 'typescript';
+import { Category, Customer, Order } from './common/commonClasses';
+import { IDataBaseController, IView, } from './common/commonInterfaces';
 import { NotifyType } from './common/enumTypes';
 import {frontClass} from './frontClass';
 
@@ -38,6 +39,30 @@ class TestDataBaseController implements IDataBaseController{
                     break;
             }
     }
+}
+
+class TestViewController implements IView{
+
+    private _view:frontClass;
+    constructor(view:frontClass){
+        this._view=view;
+    }
+    updateIdOfCustomers(data: Set<number>): void {
+        this._view.updateIdOfCustomers(data);
+    }
+    updateIdOfOrders(data: Set<number>): void {
+        this._view.updateIdOfOrders(data);
+    }
+    updateIdOfModels(data: Set<number>): void {
+        this._view.updateIdOfModels(data);
+    }
+    updateCustomers(data: Customer[]): void {
+        this._view.updateCustomers(data);
+    }
+    updateCategories(data: Category[]): void {
+        this._view.updateCategories(data);
+    }
+    
 }
 
 class TestDataBase{
