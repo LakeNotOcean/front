@@ -1,5 +1,5 @@
 
-import { Category, Customer, Order } from './common/commonClasses';
+import { Category, Customer, Order,Item } from './common/commonClasses';
 import { IDataBaseController, IView, } from './common/commonInterfaces';
 import { NotifyType } from './common/enumTypes';
 import {frontClass} from './frontClass';
@@ -18,24 +18,34 @@ class TestDataBaseController implements IDataBaseController{
     notifyPushOrder(order: Order): void{
         console.log("order was pushed");
     }
+    notifyPushModel(model:Item):void{
+        console.log("model was pushed");
+    }
+    notifyPushCategory(cat:Category):void{
+        console.log("category was pushed");
+    }
     notify(notifies:Array<NotifyType>): void{
         for (let i=0; i<notifies.length; ++i)
             switch(notifies[i]){
                 case NotifyType.idOfCustomers:
-                    this._dataBase.sendIdOfCustomers();
+                    this._dataBase.sendId(NotifyType.idOfCustomers);
                     console.log("get id of customers was notify");
                     break;
                 case NotifyType.idOfModels:
-                    this._dataBase.sendIdOfModels();
+                    this._dataBase.sendId(NotifyType.idOfModels);
                     console.log("get id of model was notify");
                     break;
                 case NotifyType.idOfOrders:
-                    this._dataBase.sendIdOfOrders();
+                    this._dataBase.sendId(NotifyType.idOfOrders);
                     console.log("get id of orders was notify");
                     break;
                 case NotifyType.listOfCust:
                     this._dataBase.sendListOfCustomers();
                     console.log("get list of customers was notify");
+                    break;
+                case NotifyType.idOfCat:
+                    this._dataBase.sendId(NotifyType.idOfCat);
+                    console.log("get id of categories was notify");
                     break;
             }
     }
@@ -47,14 +57,8 @@ class TestViewController implements IView{
     constructor(view:frontClass){
         this._view=view;
     }
-    updateIdOfCustomers(data: Set<number>): void {
-        this._view.updateIdOfCustomers(data);
-    }
-    updateIdOfOrders(data: Set<number>): void {
-        this._view.updateIdOfOrders(data);
-    }
-    updateIdOfModels(data: Set<number>): void {
-        this._view.updateIdOfModels(data);
+    updateId(data:Set<number>,type:NotifyType){
+        this._view.updateId(data,type);
     }
     updateCustomers(data: Customer[]): void {
         this._view.updateCustomers(data);
@@ -79,14 +83,8 @@ class TestDataBase{
     sendListOfCustomers():void{
         this._front?.updateCustomers([this.alice,this.bob]);
     }
-    sendIdOfCustomers():void{
-        this._front?.updateIdOfCustomers(new Set<number>().add(1234));
-    }
-    sendIdOfOrders():void{
-        this._front?.updateIdOfOrders(new Set<number>().add(1234));
-    }
-    sendIdOfModels():void{
-        this._front?.updateIdOfModels(new Set<number>().add(1234));
+    sendId(type:NotifyType):void{
+        this._front?.updateId(new Set<number>().add(1234),type);
     }
 
 }

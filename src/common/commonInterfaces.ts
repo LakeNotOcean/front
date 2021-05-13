@@ -4,6 +4,8 @@ import { NotifyType } from "./enumTypes";
 export interface IDataBaseController {
   notifyPushCustomer(cust: Customer): void;
   notifyPushOrder(order: Order): void;
+  notifyPushModel(model: Item): void;
+  notifyPushCategory(cat: Category): void;
   //notifyGetOrderInfo(orderId: number): void;
   //notifyGetItemInfo(itemId: number): void;
   //notifyGetListOfItems(): void;
@@ -20,9 +22,5 @@ export interface IView {
   //updateItemInfo(item: Item): void;
   //updateListOfItems(items: Array<Item>): void;
   //updateCustomerOrders(orders: Array<Order>): void;
-  updateIdOfCustomers(data: Set<number>): void;
-  updateIdOfOrders(data: Set<number>): void;
-  updateIdOfModels(data: Set<number>): void;
-  updateCustomers(data: Array<Customer>): void;
-  updateCategories(data: Array<Category>): void;
+  updateId(data: Set<number>, type: NotifyType): void;
 }

@@ -2,7 +2,7 @@
 
 
 import React, {Component,  RefObject} from 'react';
-import { Customer, Order } from './common/commonClasses';
+import { Category, Customer, Item, Order } from './common/commonClasses';
 import { IDataBaseController } from './common/commonInterfaces';
 import { NotifyType, SendType } from './common/enumTypes';
 import styles from './styles/addDataElement.module.css'
@@ -134,15 +134,24 @@ export class AddData extends Component<AddDataProps,AddDataState>{
                     +(data.get("ID") || 0),
                     data.get("First Name"), data.get("lastName"), data.get("Date of Birth"),data.get("Location")
                   ));
-                  console.log("customer was send");
                 break;
             case SendType.order:
                 this.props.dataBaseContr.notifyPushOrder(new Order(
                     +(data.get("ID") || 0),
                     +(data.get("Customer") || 0), +(data.get("Model") || 0), data.get("Order Date"),data.get("Delivery Date"),
                   ));
-                  console.log("order was send");
                   break;
+            case SendType.model:
+                this.props.dataBaseContr.notifyPushModel(new Item(+(data.get("ID") || 0),
+                data.get("Name"),+(data.get("Price") || 0),+(data.get("Category") || 0),
+                +(data.get("Storage") || 0)
+                ));
+                break;
+            case SendType.Category:
+                this.props.dataBaseContr.notifyPushCategory(new Category(+(data.get("ID") || 0),
+                data.get("Name")
+                ));
+                break;
         }
     }
 

@@ -46,7 +46,8 @@ export class Item extends Formattable {
     private _id: number,
     private _name: string = "None",
     private _price: number = 0,
-    private _categoryId: number
+    private _categoryId: number,
+    private _storage: number
   ) {
     super();
   }

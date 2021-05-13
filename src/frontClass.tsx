@@ -21,6 +21,8 @@ export class frontClass implements IView  {
 
     private _customerRef:RefObject<AddData>;
     private _orderRef:RefObject<AddData>;
+    private _modelRef:RefObject<AddData>;
+    private _catRef:RefObject<AddData>;
     private _navBarRef:RefObject<NavbarClass>;
     private _dataBaseContr:IDataBaseController;
 
@@ -30,6 +32,8 @@ export class frontClass implements IView  {
         this._customerRef=createRef<AddData>();
         this._orderRef=createRef<AddData>();
         this._navBarRef=createRef<NavbarClass>();
+        this._modelRef=createRef<AddData>();
+        this._catRef=createRef<AddData>();
     }
     render():void{  
       ReactDOM.render(
@@ -58,8 +62,25 @@ export class frontClass implements IView  {
                 dataBaseContr={this._dataBaseContr} typeOfData={SendType.order}
                 listOfNotifies={[NotifyType.idOfOrders, NotifyType.idOfModels, NotifyType.idOfCustomers]}
                 ref={this._orderRef}
-                /> 
-                </div>
+                />
+              <AddData title={"Add Model"} childProps={[{title:"ID",inputType:"number",errorMessage:"id exists/empty"},
+                {title:"Name",inputType:"string",errorMessage:"empty field"},
+                {title:"Price",inputType:"number",errorMessage:"empty field"},
+                {title:"Category",inputType:"number",errorMessage:"id exists/empty"},
+                {title:"storage",inputType:"number",errorMessage:"empty field"}]
+                }
+                dataBaseContr={this._dataBaseContr} typeOfData={SendType.model}
+                listOfNotifies={[NotifyType.idOfModels,NotifyType.idOfCat]}
+                ref={this._modelRef}
+              /> 
+              <AddData title={"Add Category"} childProps={[{title:"ID",inputType:"number",errorMessage:"id exists/empty"},
+                {title:"Name",inputType:"string",errorMessage:"empty field"}]
+                }
+                dataBaseContr={this._dataBaseContr} typeOfData={SendType.Category}
+                listOfNotifies={[NotifyType.idOfCat]}
+                ref={this._catRef}
+              />  
+              </div>
               <Link to="/" className={styles.link}>return to main page</Link>
               </div>
             )}/>
@@ -75,21 +96,44 @@ export class frontClass implements IView  {
         document.getElementById('root')
       );
     }
+    updateId(data:Set<number>, type:NotifyType):void{
+      switch(type){
+        case NotifyType.idOfCustomers:
+          this._customerRef.current?.updateExist(0,data);
+          this._orderRef.current?.updateExist(1,data);
+          break;
+        case NotifyType.idOfOrders:
+          this._orderRef.current?.updateExist(0,data);
+          break;
+        case NotifyType.idOfModels:
+          this._orderRef.current?.updateExist(2,data);
+          this._modelRef.current?.updateExist(0,data);
+          break;
+        case NotifyType.idOfCat:
+          this._modelRef.current?.updateExist(3,data);
+          this._catRef.current?.updateExist(0,data);
+          break;
+      }
+    }
+    // updateIdOfCustomers(data:Set<number>):void{
+    //     this._customerRef.current?.updateExist(0,data);
+    //     this._orderRef.current?.updateExist(1,data);
+    //     console.log("updateIdOfCustomers was called");
+    // }
+    // updateIdOfOrders(data:Set<number>):void{
+    //     this._orderRef.current?.updateExist(0,data);
+    //     console.log("updateIdOfOrders was called");
+    // }
 
-    updateIdOfCustomers(data:Set<number>):void{
-        this._customerRef.current?.updateExist(0,data);
-        this._orderRef.current?.updateExist(1,data);
-        console.log("updateIdOfCustomers was called");
-    }
-    updateIdOfOrders(data:Set<number>):void{
-        this._orderRef.current?.updateExist(0,data);
-        console.log("updateIdOfOrders was called");
-    }
-
-    updateIdOfModels(data: Set<number>): void{
-      this._orderRef.current?.updateExist(2,data);
-      console.log("updateIdOfModels was called");
-    }
+    // updateIdOfModels(data: Set<number>): void{
+    //   this._orderRef.current?.updateExist(2,data);
+    //   this._modelRef.current?.updateExist(0,data);
+    //   console.log("updateIdOfModels was called");
+    // }
+    // updateIdOfCategories(data:Set<number>):void{
+    //   this._modelRef.current?.updateExist(3,data);
+    //   this._catRef.current?.updateExist(0,data);
+    // }
 
     updateCustomers(data:Array<Customer>):void{
       console.log("updateCustomers in frontClass is called",data.length);
