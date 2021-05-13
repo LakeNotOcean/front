@@ -58,8 +58,12 @@ export class AddData extends Component<AddDataProps,AddDataState>{
             this._childElements.push(React.createRef<InputData>());
         }
     }
+
     componentDidMount(){
         this.props.dataBaseContr.notify(this.props.listOfNotifies);   
+    }
+    componentDidUpdate(){
+        this.props.dataBaseContr.notify(this.props.listOfNotifies);
     }
 
     render(){   
@@ -120,6 +124,7 @@ export class AddData extends Component<AddDataProps,AddDataState>{
         if (i>=this._exist.length)
             return;
         this._exist[i]=data;
+        console.log(`data of ${this.props.title} was updated`);
     }
     private sendData(data:Map<string,string>):void{
         switch(this.props.typeOfData){

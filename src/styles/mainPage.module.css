@@ -45,7 +45,7 @@
   background-color: rgb(51, 50, 50);
 }
 
-.link:hoover {
+.link:hover {
   background-color: rgb(100, 99, 99);
 }
 .link:active {

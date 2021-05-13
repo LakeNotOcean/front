@@ -14,7 +14,7 @@ import Footer from './Footer';
 import { Category, Customer} from './common/commonClasses';
 import { IDataBaseController, IView } from './common/commonInterfaces';
 import { NotifyType, SendType } from './common/enumTypes';
-
+import styles from './styles/frontClass.module.css'
 
 export class frontClass implements IView  {
 
@@ -36,7 +36,7 @@ export class frontClass implements IView  {
           <Router>
             <Route exact path="/" component={MainPage}/>
             <Route exact path="/inputData" render={()=> (
-            <div>
+            <section className={styles.AddData}>
               <AddData title={"Add Customer"} childProps={[{title:"ID",inputType:"number",errorMessage:"id exists/empty"},
                 {title:"First Name",inputType:"string", errorMessage:"empty field"},
                 {title:"Last Name",inputType:"string", errorMessage:"empty field"},
@@ -47,18 +47,18 @@ export class frontClass implements IView  {
               ref={this._customerRef}
               />
             <AddData title={"Add Order"} childProps={[{title:"ID",inputType:"number",errorMessage:"id exists/empty"},
-                {title:"Customer",inputType:"number",errorMessage:"wrong id"},
-                {title:"Model",inputType:"number",errorMessage:"empty field"},
+                {title:"Customer",inputType:"number",errorMessage:"id exists/empty"},
+                {title:"Model",inputType:"number",errorMessage:"id exists/empty"},
                 {title:"Order Date",inputType:"date",errorMessage:"empty field"},
                 {title:"Delivery Date",inputType:"date",errorMessage:"empty field"},
                 {title:"Delivery",inputType:"string",errorMessage:"empty field"}]
                 }
                 dataBaseContr={this._dataBaseContr} typeOfData={SendType.order}
-                listOfNotifies={[NotifyType.idOfCustomers, NotifyType.idOfModels, NotifyType.idOfCustomers]}
+                listOfNotifies={[NotifyType.idOfOrders, NotifyType.idOfModels, NotifyType.idOfCustomers]}
                 ref={this._orderRef}
                 /> 
                 <Link to="/">return to main page</Link>
-              </div>
+              </section>
             )}/>
             <Route exact path="/outputData" render={()=>(
               <div>
@@ -76,16 +76,16 @@ export class frontClass implements IView  {
     updateIdOfCustomers(data:Set<number>):void{
         this._customerRef.current?.updateExist(0,data);
         this._orderRef.current?.updateExist(1,data);
-        console.log("customersId was updated");
+        console.log("updateIdOfCustomers was called");
     }
     updateIdOfOrders(data:Set<number>):void{
-        this._customerRef.current?.updateExist(0,data);
-        console.log("ordersId was updated");
+        this._orderRef.current?.updateExist(0,data);
+        console.log("updateIdOfOrders was called");
     }
 
     updateIdOfModels(data: Set<number>): void{
       this._orderRef.current?.updateExist(2,data);
-      console.log("modelsId was updated");
+      console.log("updateIdOfModels was called");
     }
 
     updateCustomers(data:Array<Customer>):void{
