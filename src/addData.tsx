@@ -5,6 +5,7 @@ import React, {Component,  RefObject} from 'react';
 import { Customer, Order } from './common/commonClasses';
 import { IDataBaseController } from './common/commonInterfaces';
 import { NotifyType, SendType } from './common/enumTypes';
+import styles from './styles/addDataElement.module.css'
 
 // export interface InputPropsCallBack{
 //     title:string;
@@ -68,11 +69,11 @@ export class AddData extends Component<AddDataProps,AddDataState>{
 
     render(){   
         return(
-            <div className="AddData">
+            <div className={styles.addDataElement}>
             <h1>{this.props.title} </h1>
-            <button className="AddDataButton" onClick={this.display}>open fields</button>
+            <button className={styles.addDataButton} onClick={this.display}>open fields</button>
             {this.state.displayAdd?
-            <div className="DataFields">
+            <div className={styles.dataFields}>
                 {this.props.childProps.map((element:InputProps,i) => (      
                 <InputData title={element.title}
                     inputType={element.inputType}
@@ -82,7 +83,7 @@ export class AddData extends Component<AddDataProps,AddDataState>{
                     key={element.title}
                 /> 
                 ))}
-                <button className="GetData" onClick={this.checkData}>submmit</button>
+                <button className={`${styles.addDataButton} ${styles.subButton}`} onClick={this.checkData}>submmit</button>
             </div>:
             null}   
             </div>
@@ -176,10 +177,13 @@ export class InputData extends Component<InputProps,InputState>{
 
     render(){
         return (
-            <div className={this.props.title}>
-            <h2>{this.props.title}</h2>
-            {this.state.isError?<p>{this.props.errorMessage}</p>:null}
-            <input className="inputData" placeholder={"get "+this.props.title} type={this.props.inputType} value={this.state.inputValue}
+            <div className={styles.inputFields}>
+            <div className={styles.inputInfo}>
+                <h2>{this.props.title}</h2>
+                {this.state.isError?<h2 className={styles.errorMes}>{this.props.errorMessage}</h2>:null}
+            </div>
+            <input  placeholder={"get "+this.props.title} type={this.props.inputType} value={this.state.inputValue}
+                className={`${styles.inputField}`} style={{borderColor:this.state.isError?'red':'black'}}
                 onChange={this.handleChange}/>
             </div>)
     }

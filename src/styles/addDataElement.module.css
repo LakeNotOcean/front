@@ -1,0 +1,58 @@
+.addDataElement {
+  padding: 3%;
+  font-size: 1rem;
+}
+
+.addDataButton {
+  background-color: rgb(51, 50, 50);
+  padding: 2%;
+  width: 7rem;
+  height: 3.7rem;
+  cursor: pointer;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: large;
+  color: white;
+  border-radius: 5px;
+}
+.addDataButton:hover {
+  background-color: rgb(100, 99, 99);
+}
+.addDataButton:active {
+  background-color: rgb(34, 34, 34);
+}
+
+.subButton {
+  margin-top: 10%;
+  width: 5rem;
+  height: 2rem;
+}
+
+.subButton:hover {
+  background-color: orange;
+}
+
+.subButton:active {
+  background-color: red;
+}
+.dataFields {
+  padding: 3%;
+}
+
+.inputFields {
+  font-size: xx-small;
+  color: wheat;
+}
+
+.inputInfo {
+  display: flex;
+  flex-direction: row;
+}
+
+.errorMes {
+  margin-left: 4%;
+  color: red;
+}
+
+.inputField {
+  border-radius: 4px;
+}

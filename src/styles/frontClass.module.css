@@ -1,5 +1,47 @@
 .addData {
   height: 100vh;
   min-height: 100vh;
+  overflow-y: auto;
   background-color: #2e3036;
+  font-family: Arial, Helvetica, sans-serif;
+  display: block;
+}
+
+.addDataElements {
+  color: white;
+  background-color: rgb(70, 81, 105);
+  border-radius: 25px;
+  top: 4%;
+  left: 50%;
+  transform: translate(-50%, -0%);
+  max-height: fit-content;
+  border-radius: 25px;
+  padding-top: 1%;
+  padding: 1%;
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+}
+
+.link {
+  display: inline-block;
+  margin-left: 10%;
+  margin-top: 5%;
+  padding: 0.9rem;
+  border-radius: 5px;
+  font-size: xx-large;
+  text-align: center;
+  cursor: pointer;
+  text-decoration: none;
+  border: none;
+  outline: none;
+  color: white;
+  background-color: rgb(70, 81, 105);
+}
+
+.link:hover {
+  background-color: rgb(100, 99, 99);
+}
+.link:active {
+  background-color: rgb(34, 34, 34);
 }
