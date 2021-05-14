@@ -115,6 +115,25 @@ export class frontClass implements IView  {
           break;
       }
     }
+    addId(data:number,type:NotifyType):void{
+      switch(type){
+        case NotifyType.idOfCustomers:
+          this._customerRef.current?.addExist(0,data);
+          this._orderRef.current?.addExist(1,data);
+          break;
+        case NotifyType.idOfOrders:
+          this._orderRef.current?.addExist(0,data);
+          break;
+        case NotifyType.idOfModels:
+          this._orderRef.current?.addExist(2,data);
+          this._modelRef.current?.addExist(0,data);
+          break;
+        case NotifyType.idOfCat:
+          this._modelRef.current?.addExist(3,data);
+          this._catRef.current?.addExist(0,data);
+          break;
+      }
+    }
     // updateIdOfCustomers(data:Set<number>):void{
     //     this._customerRef.current?.updateExist(0,data);
     //     this._orderRef.current?.updateExist(1,data);

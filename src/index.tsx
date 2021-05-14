@@ -39,10 +39,10 @@ class TestDataBaseController implements IDataBaseController{
                     this._dataBase.sendId(NotifyType.idOfOrders);
                     console.log("get id of orders was notify");
                     break;
-                case NotifyType.listOfCust:
-                    this._dataBase.sendListOfCustomers();
-                    console.log("get list of customers was notify");
-                    break;
+                // case NotifyType.listOfCust:
+                //     this._dataBase.sendListOfCustomers();
+                //     console.log("get list of customers was notify");
+                //     break;
                 case NotifyType.idOfCat:
                     this._dataBase.sendId(NotifyType.idOfCat);
                     console.log("get id of categories was notify");
@@ -65,6 +65,9 @@ class TestViewController implements IView{
     }
     updateCategories(data: Category[]): void {
         this._view.updateCategories(data);
+    }
+    addId(data:number,type:NotifyType):void{
+        this._view.addId(data,type);
     }
     
 }

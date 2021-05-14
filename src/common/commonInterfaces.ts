@@ -23,4 +23,5 @@ export interface IView {
   //updateListOfItems(items: Array<Item>): void;
   //updateCustomerOrders(orders: Array<Order>): void;
   updateId(data: Set<number>, type: NotifyType): void;
+  addId(data: number, type: NotifyType): void;
 }

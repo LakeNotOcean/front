@@ -127,6 +127,11 @@ export class AddData extends Component<AddDataProps,AddDataState>{
         this._exist[i]=data;
         console.log(`data of ${this.props.title} was updated`);
     }
+    addExist(i:number,data:number):void{
+        if (i>=this._exist.length)
+            return;
+        this._exist[i].add(data);
+    }
     private sendData(data:Map<string,string>):void{
         switch(this.props.typeOfData){
             case SendType.customer:

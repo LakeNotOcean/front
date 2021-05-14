@@ -3,7 +3,6 @@ export enum NotifyType {
   idOfOrders,
   idOfModels,
   idOfCat,
-  listOfCust,
 }
 
 export enum SendType {
