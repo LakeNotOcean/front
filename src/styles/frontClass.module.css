@@ -1,10 +1,12 @@
 .addData {
-  height: 100vh;
-  min-height: 100vh;
-  overflow-y: auto;
+  height: 100vw;
+  min-height: 100vw;
   background-color: #2e3036;
   font-family: Arial, Helvetica, sans-serif;
   display: block;
+  overflow: auto;
+  background-size: cover;
+  background-attachment: fixed;
 }
 
 .addDataElements {
@@ -15,19 +17,22 @@
   left: 50%;
   transform: translate(-50%, -0%);
   max-height: fit-content;
+  max-width: fit-content;
   border-radius: 25px;
   padding-top: 1%;
   padding: 1%;
   position: absolute;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
+  box-sizing: border-box;
 }
 
 .link {
   display: inline-block;
   margin-left: 2%;
   margin-top: 5%;
-  padding: 0.9rem;
+  padding: 0.7em;
   border-radius: 5px;
   font-size: xx-large;
   text-align: center;
@@ -36,6 +41,7 @@
   border: none;
   outline: none;
   color: white;
+  box-sizing: border-box;
   background-color: rgb(70, 81, 105);
 }
 

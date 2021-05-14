@@ -83,7 +83,7 @@ export class AddData extends Component<AddDataProps,AddDataState>{
                     key={element.title}
                 /> 
                 ))}
-                <button className={`${styles.addDataButton} ${styles.subButton}`} onClick={this.checkData}>submmit</button>
+                <button className={`${styles.addDataButton} ${styles.subButton}`} onClick={this.checkData}>submit</button>
             </div>:
             null}   
             </div>

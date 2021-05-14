@@ -1,18 +1,20 @@
 .addDataElement {
   padding: 3%;
-  font-size: 1rem;
+  font-size: 1em;
+  box-sizing: border-box;
 }
 
 .addDataButton {
   background-color: rgb(51, 50, 50);
   padding: 2%;
-  width: 7rem;
-  height: 3.7rem;
+  width: 7em;
+  height: 3.7em;
   cursor: pointer;
   font-family: Arial, Helvetica, sans-serif;
   font-size: large;
   color: white;
   border-radius: 5px;
+  box-sizing: border-box;
 }
 .addDataButton:hover {
   background-color: rgb(100, 99, 99);
@@ -23,8 +25,8 @@
 
 .subButton {
   margin-top: 10%;
-  width: 5rem;
-  height: 2rem;
+  width: 5em;
+  height: 2em;
 }
 
 .subButton:hover {
