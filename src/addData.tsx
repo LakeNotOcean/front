@@ -3,8 +3,8 @@
 
 import React, {Component,  RefObject} from 'react';
 import { Category, Customer, Item, Order } from './common/commonClasses';
-import { IDataBaseController } from './common/commonInterfaces';
-import { NotifyType, SendType } from './common/enumTypes';
+import { IFrontHandler } from './common/commonInterfaces';
+import { idType,  SendType } from './common/enumTypes';
 import styles from './styles/addDataElement.module.css'
 
 // export interface InputPropsCallBack{
@@ -18,53 +18,55 @@ export interface InputProps{
     title:string;
     inputType:string;
     errorMessage:string;
+    type:idType
 }
 
 export interface InputState {
     isError:boolean;
     inputValue:string; 
+    isDisabled:boolean;
 }
 
 
 export interface AddDataProps {
     childProps:Array<InputProps>;
     title:string;   
-    dataBaseContr:IDataBaseController;
-    listOfNotifies:Array<NotifyType>;
+    dataBaseContr:IFrontHandler;
     typeOfData:SendType;
 }
 
 export interface AddDataState{
     displayAdd:boolean;
+    isWait:boolean;
 }
 
 export class AddData extends Component<AddDataProps,AddDataState>{
 
     
     private _childElements:Array<RefObject<InputData>>;
-    private _exist:Array<Set<number>>;
+    private _childElementsWithId:Map<idType,RefObject<InputData>>;
 
     constructor(props:AddDataProps){
         super(props)
-        this.state={displayAdd:false}
+        this.state={displayAdd:false, isWait:false}
         this.display=this.display.bind(this);
         this.checkData=this.checkData.bind(this);
-        this.updateExist=this.updateExist.bind(this);
-        //this.handleChange=this.handleChange.bind(this);
         this._childElements=[];
-        this._exist=[];
+        this._childElementsWithId=new Map();
         for (let i:number=0; i<this.props.childProps.length; ++i)
         {
-            this._exist.push(new Set<number>());
-            this._childElements.push(React.createRef<InputData>());
+            let ref=React.createRef<InputData>();
+            this._childElements.push(ref);
+            if (this.props.childProps[i].type!==idType.none)
+                this._childElementsWithId.set(this.props.childProps[i].type,ref);
         }
     }
 
     componentDidMount(){
-        this.props.dataBaseContr.notify(this.props.listOfNotifies);   
+         
     }
     componentDidUpdate(){
-        this.props.dataBaseContr.notify(this.props.listOfNotifies);
+        
     }
 
     render(){   
@@ -78,12 +80,14 @@ export class AddData extends Component<AddDataProps,AddDataState>{
                 <InputData title={element.title}
                     inputType={element.inputType}
                     errorMessage={element.errorMessage}
-                    //onInputChange={this.handleChange}
+                    type={element.type}
                     ref={this._childElements[i]}
                     key={element.title}
                 /> 
                 ))}
-                <button className={`${styles.addDataButton} ${styles.subButton}`} onClick={this.checkData}>submit</button>
+                <button className={`${styles.addDataButton} ${styles.subButton}`} onClick={this.checkData}
+                disabled={this.state.isWait?true:false}>submit</button>
+                {this.state.isWait?<p>waiting</p>:null}
             </div>:
             null}   
             </div>
@@ -98,8 +102,7 @@ export class AddData extends Component<AddDataProps,AddDataState>{
         for (let i:number=0; i<this._childElements.length; ++i)
         {
             this._childElements[i].current?.notDisplayError();
-            if (this._exist[i].has(+(this._childElements[i].current?.state.inputValue || ""))
-            || this._childElements[i].current?.state.inputValue==="")
+            if (this._childElements[i].current?.state.inputValue==="")
             {
                 isAccept=false;
                 this._childElements[i].current?.displayError();
@@ -109,29 +112,42 @@ export class AddData extends Component<AddDataProps,AddDataState>{
         }
         if (isAccept)
         {
+            for (let i=0;i<this._childElements.length; ++i)
+                this._childElements[i].current?.disable();
+            this.setState({isWait:true});
             let output=new Map<string,string>();
             this._childElements.forEach((element)=>{
                 output.set( element.current?.props.title || "",element.current?.state.inputValue || "");
-            })
-            this._childElements.forEach((element)=>{
-                element.current?.clearInput();
-            }); 
+            }) 
             this.sendData(output);
 
         }
 
     }
-    updateExist(i:number,data:Set<number>):void{
-        if (i>=this._exist.length)
-            return;
-        this._exist[i]=data;
-        console.log(`data of ${this.props.title} was updated`);
+
+    idCheck(isIdAccepted:Map<idType,boolean>):void{
+        let isAccept:boolean=true;
+        isIdAccepted.forEach((value,key)=>{
+            if (value===false)
+            {
+                isAccept=false;
+                this._childElementsWithId.get(key)?.current?.displayError();
+            }
+        })
+        if (isAccept)
+            this._childElements.forEach((element)=>{
+                element.current?.clearInput();
+            });
+        this.stopWaiting();
     }
-    addExist(i:number,data:number):void{
-        if (i>=this._exist.length)
-            return;
-        this._exist[i].add(data);
+
+    stopWaiting():void{
+        this._childElements.forEach((el)=>{
+            el.current?.notDisable();
+        })
+        this.setState({isWait:false});
     }
+
     private sendData(data:Map<string,string>):void{
         switch(this.props.typeOfData){
             case SendType.customer:
@@ -152,7 +168,7 @@ export class AddData extends Component<AddDataProps,AddDataState>{
                 +(data.get("Storage") || 0)
                 ));
                 break;
-            case SendType.Category:
+            case SendType.category:
                 this.props.dataBaseContr.notifyPushCategory(new Category(+(data.get("ID") || 0),
                 data.get("Name")
                 ));
@@ -169,7 +185,7 @@ export class InputData extends Component<InputProps,InputState>{
     constructor(props:InputProps,state:InputState){
         super(props)
         this.state=state;
-        this.state={isError:false,inputValue:""};
+        this.state={isError:false,inputValue:"",isDisabled:false};
         this.handleChange=this.handleChange.bind(this);
         this.displayError=this.displayError.bind(this);
         this.notDisplayError=this.notDisplayError.bind(this);
@@ -197,6 +213,7 @@ export class InputData extends Component<InputProps,InputState>{
                 {this.state.isError?<h2 className={styles.errorMes}>{this.props.errorMessage}</h2>:null}
             </div>
             <input  placeholder={"get "+this.props.title} type={this.props.inputType} value={this.state.inputValue}
+                disabled={this.state.isDisabled?true: false}    
                 className={`${styles.inputField}`} style={{borderColor:this.state.isError?'red':'black'}}
                 onChange={this.handleChange}/>
             </div>)
@@ -210,6 +227,13 @@ export class InputData extends Component<InputProps,InputState>{
     clearInput():void{
         this.setState({inputValue:""});
     }
+    disable():void{
+        this.setState({isDisabled:true});
+    }
+    notDisable():void{
+        this.setState({isDisabled:false});
+    }
 
 }
+
 

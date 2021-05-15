@@ -1,13 +1,14 @@
-export enum NotifyType {
-  idOfCustomers,
-  idOfOrders,
-  idOfModels,
-  idOfCat,
+export enum idType {
+  customer,
+  order,
+  model,
+  category,
+  none,
 }
 
 export enum SendType {
   customer,
   order,
   model,
-  Category,
+  category,
 }

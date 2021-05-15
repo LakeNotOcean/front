@@ -120,4 +120,13 @@ export class Order extends Formattable {
   get del(): string {
     return this._delivery;
   }
+  get id(): number {
+    return this._custId;
+  }
+  get cust():number{
+    return this._custId;
+  }
+  get item():number{
+    return this._items;
+  }
 }

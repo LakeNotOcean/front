@@ -1,8 +1,7 @@
 import { Component } from 'react';
 import styled from 'styled-components'
 import { Category, Customer } from './common/commonClasses';
-import { IDataBaseController } from './common/commonInterfaces';
-import { NotifyType } from './common/enumTypes';
+import { IFrontHandler } from './common/commonInterfaces';
 import CustomerSearch from './CustomerSearch';
 import logo from './logo.svg'
 import PerItemRevenueInfo from './PerCategoryRevenueInfo';
@@ -75,7 +74,7 @@ const Button = styled.li`
 // }
 
 export interface NavBarProps{
-    dataBaseContr:IDataBaseController;
+    dataBaseContr:IFrontHandler;
 }
 
 interface NavBarState{
@@ -102,11 +101,11 @@ export class NavbarClass extends Component<NavBarProps,NavBarState>{
 
     componentDidMount(){
         console.log("component is mounted");
-        this.props.dataBaseContr.notify([NotifyType.listOfCust]);
+        //this.props.dataBaseContr.notify([NotifyType.listOfCust]);
     }
     componentDidUpdate(){
         console.log("component is mounted");
-        this.props.dataBaseContr.notify([NotifyType.listOfCust]);
+        //this.props.dataBaseContr.notify([NotifyType.listOfCust]);
     }
 
     updateCustomers(data:Array<Customer>):number{
