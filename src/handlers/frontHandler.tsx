@@ -6,7 +6,7 @@ import { frontClass } from "../frontClass";
 export class FrontHandler implements IFrontHandler{
 
     private _front?:frontClass;
-    private _checkedId: Map<idType, boolean>; //поле для теста
+    private _checkedId: Map<idType, boolean>; //поле для отладки
     
     constructor(){
         this._checkedId=new Map<idType,boolean>();
@@ -16,32 +16,32 @@ export class FrontHandler implements IFrontHandler{
         this._front=front;
     }
 
-    
-    notifyPushCustomer(cust: ICustomer): void {
+    //функции, вызываемые при отправке данных
+    pushCustomer(cust: ICustomer): void {
         this.checkCustomer(cust);
     }
-    notifyPushOrder(order: IOrder): void {
+    pushOrder(order: IOrder): void {
         this.checkOrder(order);
     }
-    notifyPushModel(model: IModel): void {
+    pushModel(model: IModel): void {
         this.checkModel(model);
     }
-    notifyPushCategory(cat: ICategory): void {
+    pushCategory(cat: ICategory): void {
         this.checkCategory(cat);
     }
-
-    idCheck(data: Map<idType, boolean>, type: SendType): void {
+    //вызывакется при получении данных
+    idChecked(data: Map<idType, boolean>, type: SendType): void {
         this._front?.idCheck(data,type);
     }
 
-    // функции для теста
+    // функции для отладки
     private checkCustomer(cust:ICustomer):void{
         this._checkedId=new Map<idType,boolean>();
         if (cust.id_customer===1234)
             this._checkedId.set(idType.customer,false);
         else
             this._checkedId.set(idType.customer,true);
-        setTimeout(_=>{ this.idCheck(this._checkedId,SendType.customer);  },3000);   
+        setTimeout(_=>{ this.idChecked(this._checkedId,SendType.customer);  },3000);   
     }
 
 
@@ -60,7 +60,7 @@ export class FrontHandler implements IFrontHandler{
         else 
             this._checkedId.set(idType.customer,true);
         console.log(order.date_of_order);
-        setTimeout(_=>{this.idCheck(this._checkedId,SendType.order);},3000);    
+        setTimeout(_=>{this.idChecked(this._checkedId,SendType.order);},3000);    
     }
 
 
@@ -74,7 +74,7 @@ export class FrontHandler implements IFrontHandler{
             this._checkedId.set(idType.category,false);
         else
             this._checkedId.set(idType.category,true);  
-        setTimeout(_=>{this.idCheck(this._checkedId,SendType.model); },3000);  
+        setTimeout(_=>{this.idChecked(this._checkedId,SendType.model); },3000);  
     }
     private checkCategory(cat:ICategory):void{
         this._checkedId=new Map<idType,boolean>();
@@ -82,7 +82,7 @@ export class FrontHandler implements IFrontHandler{
             this._checkedId.set(idType.category,false);
         else
             this._checkedId.set(idType.category,true);
-        setTimeout(_=>{this.idCheck(this._checkedId,SendType.category);},3000);      
+        setTimeout(_=>{this.idChecked(this._checkedId,SendType.category);},3000);      
     }
 
 }
