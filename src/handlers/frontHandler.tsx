@@ -1,4 +1,4 @@
-import { Customer, Order, Item, Category } from "../common/commonClasses";
+import { ICustomer, IOrder, IModel, ICategory } from "../common/commonClasses";
 import { IFrontHandler } from "../common/commonInterfaces";
 import { idType, SendType } from "../common/enumTypes";
 import { frontClass } from "../frontClass";
@@ -17,16 +17,16 @@ export class FrontHandler implements IFrontHandler{
     }
 
     
-    notifyPushCustomer(cust: Customer): void {
+    notifyPushCustomer(cust: ICustomer): void {
         this.checkCustomer(cust);
     }
-    notifyPushOrder(order: Order): void {
+    notifyPushOrder(order: IOrder): void {
         this.checkOrder(order);
     }
-    notifyPushModel(model: Item): void {
+    notifyPushModel(model: IModel): void {
         this.checkModel(model);
     }
-    notifyPushCategory(cat: Category): void {
+    notifyPushCategory(cat: ICategory): void {
         this.checkCategory(cat);
     }
 
@@ -35,9 +35,9 @@ export class FrontHandler implements IFrontHandler{
     }
 
     // функции для теста
-    private checkCustomer(cust:Customer):void{
+    private checkCustomer(cust:ICustomer):void{
         this._checkedId=new Map<idType,boolean>();
-        if (cust.id===1234)
+        if (cust.id_customer===1234)
             this._checkedId.set(idType.customer,false);
         else
             this._checkedId.set(idType.customer,true);
@@ -45,46 +45,44 @@ export class FrontHandler implements IFrontHandler{
     }
 
 
-    private checkOrder(order:Order):void{
+    private checkOrder(order:IOrder):void{
         this._checkedId=new Map<idType,boolean>();
-        if (order.id===1234)
+        if (order.id_order===1234)
             this._checkedId.set(idType.order,false);
         else 
             this._checkedId.set(idType.order,true);
-        if (order.item===1234)
+        if (order.type===1234)
             this._checkedId.set(idType.model,false);
         else 
             this._checkedId.set(idType.model,true);
-        if (order.cust===1234)
+        if (order.customer===1234)
             this._checkedId.set(idType.customer,false);
         else 
             this._checkedId.set(idType.customer,true);
-        setTimeout(function(){ alert("Hello"); },3000);
-        this.idCheck(this._checkedId,SendType.order);    
+        console.log(order.date_of_order);
+        setTimeout(_=>{this.idCheck(this._checkedId,SendType.order);},3000);    
     }
 
 
-    private checkModel(model:Item):void{
+    private checkModel(model:IModel):void{
         this._checkedId=new Map<idType,boolean>();
-        if (model.id===1234)
+        if (model.id_model===1234)
             this._checkedId.set(idType.model,false);
         else
             this._checkedId.set(idType.model,true);
-        if (model.categoryId===1234)
+        if (model.id_model===1234)
             this._checkedId.set(idType.category,false);
         else
             this._checkedId.set(idType.category,true);  
-        setTimeout(function(){ alert("Hello"); },3000);  
-        this.idCheck(this._checkedId,SendType.model);    
+        setTimeout(_=>{this.idCheck(this._checkedId,SendType.model); },3000);  
     }
-    private checkCategory(cat:Category):void{
+    private checkCategory(cat:ICategory):void{
         this._checkedId=new Map<idType,boolean>();
-        if (cat.id===1234)
+        if (cat.id_category===1234)
             this._checkedId.set(idType.category,false);
         else
             this._checkedId.set(idType.category,true);
-        setTimeout(function(){ alert("Hello"); },3000);
-        this.idCheck(this._checkedId,SendType.category);    
+        setTimeout(_=>{this.idCheck(this._checkedId,SendType.category);},3000);      
     }
 
 }

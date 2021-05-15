@@ -2,7 +2,7 @@
 
 
 import React, {Component,  RefObject} from 'react';
-import { Category, Customer, Item, Order } from './common/commonClasses';
+import { ICategory, ICustomer, IModel, IOrder } from './common/commonClasses';
 import { IFrontHandler } from './common/commonInterfaces';
 import { idType,  SendType } from './common/enumTypes';
 import styles from './styles/addDataElement.module.css'
@@ -151,27 +151,31 @@ export class AddData extends Component<AddDataProps,AddDataState>{
     private sendData(data:Map<string,string>):void{
         switch(this.props.typeOfData){
             case SendType.customer:
-                this.props.dataBaseContr.notifyPushCustomer(new Customer(
+                this.props.dataBaseContr.notifyPushCustomer({id_customer:
                     +(data.get("ID") || 0),
-                    data.get("First Name"), data.get("lastName"), data.get("Date of Birth"),data.get("Location")
-                  ));
+                    fname:(data.get("First Name") || ""), lname:(data.get("lastName") || ""), 
+                    date_of_birth:(data.get("Date of Birth") || ""),location:(data.get("Location") || "")
+                });
                 break;
             case SendType.order:
-                this.props.dataBaseContr.notifyPushOrder(new Order(
+                this.props.dataBaseContr.notifyPushOrder({id_order:
                     +(data.get("ID") || 0),
-                    +(data.get("Customer") || 0), +(data.get("Model") || 0), data.get("Order Date"),data.get("Delivery Date"),
-                  ));
+                    customer:+(data.get("Customer") || 0), type:+(data.get("Model") || 0), 
+                    date_of_order:(data.get("Order Date") || ""),
+                    date_of_delivery:(data.get("Delivery Date") || ""),
+                    delivery_type:(data.get("Delivery") || ""),
+                    });
                   break;
             case SendType.model:
-                this.props.dataBaseContr.notifyPushModel(new Item(+(data.get("ID") || 0),
-                data.get("Name"),+(data.get("Price") || 0),+(data.get("Category") || 0),
-                +(data.get("Storage") || 0)
-                ));
+                this.props.dataBaseContr.notifyPushModel({id_model:+(data.get("ID") || 0),
+                name:(data.get("Name") || ""),price:+(data.get("Price") || 0),category:+(data.get("Category") || 0),
+                storage:+(data.get("Storage") || 0)
+                });
                 break;
             case SendType.category:
-                this.props.dataBaseContr.notifyPushCategory(new Category(+(data.get("ID") || 0),
-                data.get("Name")
-                ));
+                this.props.dataBaseContr.notifyPushCategory({id_category:+(data.get("ID") || 0),
+                name:(data.get("Name") || "")
+                });
                 break;
         }
     }

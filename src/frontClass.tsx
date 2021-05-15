@@ -9,7 +9,6 @@ import {
   Route,
   Link,
 } from "react-router-dom";
-import Footer from './Footer';
 import { IFrontHandler } from './common/commonInterfaces';
 import { idType, SendType } from './common/enumTypes';
 import styles from './styles/frontClass.module.css';

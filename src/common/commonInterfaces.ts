@@ -1,10 +1,10 @@
-import { Customer, Order, Item, Category } from "./commonClasses";
+import { ICustomer, IOrder, IModel, ICategory } from "./commonClasses";
 import { idType, SendType } from "./enumTypes";
 
 export interface IFrontHandler {
-  notifyPushCustomer(cust: Customer): void;
-  notifyPushOrder(order: Order): void;
-  notifyPushModel(model: Item): void;
-  notifyPushCategory(cat: Category): void;
+  notifyPushCustomer(cust: ICustomer): void;
+  notifyPushOrder(IOrder: IOrder): void;
+  notifyPushModel(model: IModel): void;
+  notifyPushCategory(cat: ICategory): void;
   idCheck(data: Map<idType, boolean>, type: SendType): void;
 }
