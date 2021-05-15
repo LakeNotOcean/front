@@ -151,14 +151,14 @@ export class AddData extends Component<AddDataProps,AddDataState>{
     private sendData(data:Map<string,string>):void{
         switch(this.props.typeOfData){
             case SendType.customer:
-                this.props.dataBaseContr.notifyPushCustomer({id_customer:
+                this.props.dataBaseContr.pushCustomer({id_customer:
                     +(data.get("ID") || 0),
                     fname:(data.get("First Name") || ""), lname:(data.get("lastName") || ""), 
                     date_of_birth:(data.get("Date of Birth") || ""),location:(data.get("Location") || "")
                 });
                 break;
             case SendType.order:
-                this.props.dataBaseContr.notifyPushOrder({id_order:
+                this.props.dataBaseContr.pushOrder({id_order:
                     +(data.get("ID") || 0),
                     customer:+(data.get("Customer") || 0), type:+(data.get("Model") || 0), 
                     date_of_order:(data.get("Order Date") || ""),
@@ -167,13 +167,13 @@ export class AddData extends Component<AddDataProps,AddDataState>{
                     });
                   break;
             case SendType.model:
-                this.props.dataBaseContr.notifyPushModel({id_model:+(data.get("ID") || 0),
+                this.props.dataBaseContr.pushModel({id_model:+(data.get("ID") || 0),
                 name:(data.get("Name") || ""),price:+(data.get("Price") || 0),category:+(data.get("Category") || 0),
                 storage:+(data.get("Storage") || 0)
                 });
                 break;
             case SendType.category:
-                this.props.dataBaseContr.notifyPushCategory({id_category:+(data.get("ID") || 0),
+                this.props.dataBaseContr.pushCategory({id_category:+(data.get("ID") || 0),
                 name:(data.get("Name") || "")
                 });
                 break;

@@ -1,14 +1,14 @@
 export enum idType {
-  customer,
-  order,
-  model,
-  category,
-  none,
+  customer = "customer",
+  order = "order",
+  model = "model",
+  category = "category",
+  none = "none",
 }
 
 export enum SendType {
-  customer,
-  order,
-  model,
-  category,
+  customer = "customer",
+  order = "order",
+  model = "model",
+  category = "category",
 }
