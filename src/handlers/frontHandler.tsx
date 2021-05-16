@@ -44,7 +44,7 @@ export class FrontHandler implements IFrontHandler{
     pushModel(model: IModel): void {
         console.log(JSON.stringify(model));
 
-        let res=this.getResult('add_customer',[`${model.id_model}`,`${model.name}`,
+        let res=this.getResult('add_model',[`${model.id_model}`,`${model.name}`,
         `${model.price}`,`${model.category}`,`${model.storage}`]);
         
         let resMap=new Map<idType,boolean>();
@@ -74,6 +74,7 @@ export class FrontHandler implements IFrontHandler{
         for (let i=1; i<=listOfArgs.length; ++i)
             xmlHttp.setRequestHeader(`arg${i}`,listOfArgs[i-1]);
         xmlHttp.send( null );
+        console.log(xmlHttp.responseText);
         let res=JSON.parse(xmlHttp.response)["RESULT"];
         console.log(res);
         return res;

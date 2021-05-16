@@ -42,7 +42,7 @@ export class frontClass  {
             <Route exact path="/inputData" render={()=> (
             <div className={styles.addData}>
               <div className={styles.addDataElements}>
-              <AddData title={"Add Customer"} childProps={[{title:"ID",inputType:"number",errorMessage:"id exists/empty",type:idType.customer},
+              <AddData title={"Add Customer"} childProps={[{title:"ID",inputType:"number",errorMessage:"wrong id/empty",type:idType.customer},
                 {title:"First Name",inputType:"string", errorMessage:"empty field",type:idType.none},
                 {title:"Last Name",inputType:"string", errorMessage:"empty field",type:idType.none},
                 {title:"Date of Birth",inputType:"date", errorMessage:"empty field",type:idType.none},
@@ -51,9 +51,9 @@ export class frontClass  {
               dataBaseContr={this._dataBaseContr}  typeOfData={SendType.customer}
               ref={this._customerRef}
               />
-            <AddData title={"Add Order"} childProps={[{title:"ID",inputType:"number",errorMessage:"id exists/empty",type:idType.order},
-                {title:"Customer",inputType:"number",errorMessage:"id exists/empty",type:idType.customer},
-                {title:"Model",inputType:"number",errorMessage:"id exists/empty",type:idType.model},
+            <AddData title={"Add Order"} childProps={[{title:"ID",inputType:"number",errorMessage:"wrong id/empty",type:idType.order},
+                {title:"Customer",inputType:"number",errorMessage:"wrong id/empty",type:idType.customer},
+                {title:"Model",inputType:"number",errorMessage:"wrong id/empty",type:idType.model},
                 {title:"Order Date",inputType:"date",errorMessage:"empty field",type:idType.none},
                 {title:"Delivery Date",inputType:"date",errorMessage:"empty field",type:idType.none},
                 {title:"Delivery",inputType:"string",errorMessage:"empty field",type:idType.none}]
@@ -61,16 +61,16 @@ export class frontClass  {
                 dataBaseContr={this._dataBaseContr} typeOfData={SendType.order}
                 ref={this._orderRef}
                 />
-              <AddData title={"Add Model"} childProps={[{title:"ID",inputType:"number",errorMessage:"id exists/empty",type:idType.model},
+              <AddData title={"Add Model"} childProps={[{title:"ID",inputType:"number",errorMessage:"wrong id/empty",type:idType.model},
                 {title:"Name",inputType:"string",errorMessage:"empty field",type:idType.none},
                 {title:"Price",inputType:"number",errorMessage:"empty field",type:idType.none},
-                {title:"Category",inputType:"number",errorMessage:"id exists/empty",type:idType.category},
+                {title:"Category",inputType:"number",errorMessage:"wrong id/empty",type:idType.category},
                 {title:"storage",inputType:"number",errorMessage:"empty field",type:idType.none}]
                 }
                 dataBaseContr={this._dataBaseContr} typeOfData={SendType.model}
                 ref={this._modelRef}
               /> 
-              <AddData title={"Add Category"} childProps={[{title:"ID",inputType:"number",errorMessage:"id exists/empty",type:idType.category},
+              <AddData title={"Add Category"} childProps={[{title:"ID",inputType:"number",errorMessage:"wrong id/empty",type:idType.category},
                 {title:"Name",inputType:"string",errorMessage:"empty field",type:idType.none}]
                 }
                 dataBaseContr={this._dataBaseContr} typeOfData={SendType.category}
