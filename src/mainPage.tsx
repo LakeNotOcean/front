@@ -9,7 +9,7 @@ export class MainPage extends Component{
     return(
         <section className={styles.mainPage}>
             <section className={styles.info}>
-                <h3 className={`${styles.greeting}`}>Welcome to the slave store database</h3>
+                <h3 className={`${styles.greeting}`}>Welcome to the mus store database</h3>
                 <small>What do you want to do?</small>
                 <div className={styles.links}>
                 <Link to="/inputData" className={styles.link}>Add some data</Link>

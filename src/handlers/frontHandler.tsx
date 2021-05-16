@@ -3,9 +3,12 @@ import { IFrontHandler } from "../common/commonInterfaces";
 import { idType, SendType } from "../common/enumTypes";
 import { frontClass } from "../frontClass";
 
+
+
 export class FrontHandler implements IFrontHandler{
 
     private _front?:frontClass;
+    readonly url="https://mus-market.herokuapp.com/func";
     private _checkedId: Map<idType, boolean>; //поле для отладки
     
     constructor(){
@@ -18,6 +21,25 @@ export class FrontHandler implements IFrontHandler{
 
     //функции, вызываемые при отправке данных
     pushCustomer(cust: ICustomer): void {
+        console.log(JSON.stringify(cust));
+        fetch(this.url,{
+            method:'POST',
+            mode:'no-cors',
+            cache:'default',
+            credentials: 'same-origin',
+            headers: {
+                command: 'add_customer',
+                accept:'/func'
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+              },
+            body:JSON.stringify(cust),
+        }).then(ressponse=>ressponse.json())
+            .then(data=>{
+                console.log('Success',data);
+            })
+            .catch((error)=>{
+                console.error('Error',error);
+            })
         this.checkCustomer(cust);
     }
     pushOrder(order: IOrder): void {
