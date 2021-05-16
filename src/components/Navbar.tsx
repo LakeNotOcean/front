@@ -15,7 +15,9 @@ export default function NavBar(props: {
         <Button onClick={(_) => props.setNavBarState(NavBarState.Revenue)}>
           Revenue
         </Button>
-        <Button onClick={(_) => props.setNavBarState(NavBarState.CustomerSearch)}>
+        <Button
+          onClick={(_) => props.setNavBarState(NavBarState.CustomerSearch)}
+        >
           Find Customer
         </Button>
         <Button onClick={(_) => props.setNavBarState(NavBarState.OrderSearch)}>

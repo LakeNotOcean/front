@@ -101,7 +101,9 @@ export class AddData extends Component<AddDataProps,AddDataState>{
         for (let i:number=0; i<this._childElements.length; ++i)
         {
             this._childElements[i].current?.notDisplayError();
-            if (this._childElements[i].current?.state.inputValue==="")
+            if (this._childElements[i].current?.state.inputValue==="" || 
+            (this._childElements[i].current?.props.inputType==="number" 
+            && +this._childElements[i].current!.state.inputValue<0))
             {
                 isAccept=false;
                 this._childElements[i].current?.displayError();
