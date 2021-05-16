@@ -153,7 +153,7 @@ export class AddData extends Component<AddDataProps,AddDataState>{
             case SendType.customer:
                 this.props.dataBaseContr.pushCustomer({id_customer:
                     +(data.get("ID") || 0),
-                    fname:(data.get("First Name") || ""), lname:(data.get("lastName") || ""), 
+                    fname:(data.get("First Name") || ""), lname:(data.get("Last Name") || ""), 
                     date_of_birth:(data.get("Date of Birth") || ""),location:(data.get("Location") || "")
                 });
                 break;

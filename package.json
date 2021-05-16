@@ -1,8 +1,8 @@
 {
   "name": "add_data",
+  "proxy": "https://mus-market.herokuapp.com",
   "version": "0.1.0",
   "private": true,
-
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.10",
     "@testing-library/react": "^11.2.6",
@@ -25,7 +25,6 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "proxy":"https://mus-market.herokuapp.com",
   "eslintConfig": {
     "extends": [
       "react-app",
