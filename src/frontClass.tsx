@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { RefObject } from 'react';
 import { createRef } from 'react';
 import ReactDOM from 'react-dom';
@@ -12,6 +12,10 @@ import {
 import { IFrontHandler } from './common/commonInterfaces';
 import { idType, SendType } from './common/enumTypes';
 import styles from './styles/frontClass.module.css';
+import Navbar, { NavBarState } from './components/Navbar';
+import CustomerSearch from './components/CustomerSearch';
+import OrderSearch from './components/OrderSearch';
+import Revenue from './components/Revenue';
 
 
 export class frontClass  {
@@ -78,8 +82,8 @@ export class frontClass  {
             )}/>
             <Route exact path="/outputData" render={()=>(
               <div>
-                <h1>output data</h1>
-                <Link to="/">return to main page</Link>
+                <App />
+                <Link to="/" className={styles.outputLink}>return to main page</Link>
               </div>
             )}/>
          </Router>
@@ -102,7 +106,9 @@ export class frontClass  {
           this._catRef.current?.idCheck(result);
           break;
       }
-    }
+    } 
+
+  
     
     // updateIdOfCustomers(data:Set<number>):void{
     //     this._customerRef.current?.updateExist(0,data);
@@ -125,4 +131,19 @@ export class frontClass  {
     // }
     
   }
+
+function App(): JSX.Element {
+    const [navBarState, setNavBarState] = useState(NavBarState.OrderSearch);
+    let jsx = <></>;
+    switch(navBarState) {
+      case NavBarState.CustomerSearch: jsx = <CustomerSearch/>; break;
+      case NavBarState.OrderSearch: jsx = <OrderSearch/>; break;
+      case NavBarState.Revenue: jsx = <Revenue/>; break;
+    }
+    return (
+      <div className="App">
+        <Navbar setNavBarState={setNavBarState}/>
+        {jsx}
+      </div>
+    );}
 

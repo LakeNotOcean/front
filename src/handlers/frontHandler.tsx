@@ -1,4 +1,3 @@
-import { couldStartTrivia } from "typescript";
 import { ICustomer, IOrder, IModel, ICategory } from "../common/commonClasses";
 import { IFrontHandler } from "../common/commonInterfaces";
 import { idType, SendType } from "../common/enumTypes";

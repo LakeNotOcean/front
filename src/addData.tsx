@@ -2,7 +2,6 @@
 
 
 import React, {Component,  RefObject} from 'react';
-import { ICategory, ICustomer, IModel, IOrder } from './common/commonClasses';
 import { IFrontHandler } from './common/commonInterfaces';
 import { idType,  SendType } from './common/enumTypes';
 import styles from './styles/addDataElement.module.css'
