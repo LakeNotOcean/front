@@ -17,6 +17,27 @@ function queryCustomerOrders(customerId: number): XMLHttpRequest {
   return xmlHttp;
 }
 
+// const axios = require('axios');
+
+// async function queryOrdersAsyncImpl(customerId: number) {
+//   const resp = await axios.get('/func', {
+//     headers: {
+//       'Cache-Control': 'no-cache, no-store, must-revalidate',
+//       "Expires": '0',
+//       "command": `customer_orders`,
+//       "arg1": `${customerId},`
+//     }
+// }
+
+// async function queryOrdersAsync(customerId: number) {
+//   for(let i = 0; i < 5; ++i) {
+//     try {
+//         return await queryOrdersAsyncImpl()
+//       });
+//     } catch {}
+//   }
+// }
+
 function DisplayOrder(props: { order: any }): JSX.Element {
   return (
     <tr>
@@ -119,7 +140,6 @@ export default function CustomerSearch(): JSX.Element {
   const [result, setResult] = useState(Result.Idle);
   let jsxFail = <></>;
   let jsxSuccess = <></>;
-  let fail = true;
   switch (result) {
     case Result.NoCustomer:
       jsxFail = <div>No customer with the given id</div>;

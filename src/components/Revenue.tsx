@@ -17,7 +17,6 @@ function queryRevenue(orderId: number, start: string, end: string): XMLHttpReque
   xmlHttp.setRequestHeader("arg3", `${end.replaceAll("-", "/")}`);
   xmlHttp.send(null);
   return xmlHttp;
-  // return xmlHttp.responseText;
 }
 
 enum Result {
@@ -28,7 +27,6 @@ enum Result {
 }
 
 function RevenueForm(props: {
-  orderId: number;
   startDate: string;
   endDate: string;
   setRevenue: React.Dispatch<React.SetStateAction<number>>;
@@ -37,6 +35,7 @@ function RevenueForm(props: {
   setEndDate: React.Dispatch<React.SetStateAction<string>>;
   setResult: React.Dispatch<React.SetStateAction<Result>>;
 }): JSX.Element {
+  const [orderId, setOrderId] = useState(1);
   return (
     <form
       onSubmit={(e) => {
@@ -44,11 +43,11 @@ function RevenueForm(props: {
         if (new Date(props.startDate) > new Date(props.endDate)) {
           props.setResult(Result.DateOrderError);
         }
-        for (let i = 0; i < 3; ++i) {
+        for (let i = 0; i < 5; ++i) {
           console.log(i);
           try {
               const resp = queryRevenue(
-                Number(props.orderId),
+                Number(orderId),
                 props.startDate,
                 props.endDate
               );
@@ -62,6 +61,7 @@ function RevenueForm(props: {
                   if (!isNaN(num)) {
                     props.setRevenue(num);
                     props.setResult(Result.Success);
+                    props.setOrderId(orderId);
                     return;
                   }
                 }
@@ -81,7 +81,7 @@ function RevenueForm(props: {
           min="1"
           max={Math.pow(2, 31) - 1}
           required
-          onChange={(e) => props.setOrderId(Number(e.target.value))}
+          onChange={(e) => setOrderId(Number(e.target.value))}
         />
       </div>
       <div>
@@ -147,10 +147,9 @@ export default function Revenue(): JSX.Element {
       <RevenueForm
         startDate={startDate}
         endDate={endDate}
-        orderId={orderId}
+        setOrderId={setOrderId}
         setResult={setResult}
         setRevenue={setRevenue}
-        setOrderId={setOrderId}
         setStartDate={setStartDate}
         setEndDate={setEndDate}
       />

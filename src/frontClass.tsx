@@ -142,7 +142,7 @@ function App(): JSX.Element {
     }
     return (
       <div className="App">
-        <Navbar setNavBarState={setNavBarState}/>
+        <Navbar navBarState={navBarState} setNavBarState={setNavBarState}/>
         {jsx}
       </div>
     );}
